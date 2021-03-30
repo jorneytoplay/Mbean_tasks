@@ -1,0 +1,31 @@
+plugins {
+    id 'application'
+    id "com.github.skjolber.aotc" version "1.0.1"
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation group: 'org.javassist', name: 'javassist', version: '3.18.2-GA'
+}
+
+run{
+    dependsOn(jar)
+    mainClassName = "memedlyaev.ekrem.mbeanTest.MainTest"
+    jvmArgs("-javaagent:C:\\Mbean_test\\build\\libs\\Mbean_test-1.0-SNAPSHOT.jar")
+}
+jar{
+    manifest{
+        attributes(
+                "Can-Redefine-Classes": true,
+                "Can-Retransform-Classes": true,
+                "Premain-Class" : "agent.manager.AgentManager",
+        )
+    }
+}
